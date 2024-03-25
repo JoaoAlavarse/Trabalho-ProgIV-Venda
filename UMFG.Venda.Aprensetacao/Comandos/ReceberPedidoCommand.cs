@@ -17,6 +17,11 @@ namespace UMFG.Venda.Aprensetacao.Comandos
             try
             {
                 var vm = parameter as ListarProdutosViewModel;
+                if (vm.Pedido.Total == 0)
+                {
+                    MessageBox.Show("Nenhum item adicionado ao pedido", "Erro!");
+                    return;
+                }
                 vm.Pedido = ucReceber.Exibir(vm.MainUserControl,
                     vm.Pedido);
             }

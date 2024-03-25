@@ -57,6 +57,9 @@ namespace UMFG.Venda.Aprensetacao.ViewModels
         public AdicionarProdutoPedidoComand Adicionar { get; private set; }
             = new AdicionarProdutoPedidoComand();
 
+        public RemoverProdutoPedidoComand Remover { get; private set; }
+            = new RemoverProdutoPedidoComand();
+
         public ReceberPedidoCommand Receber { get; private set;  }
             = new ReceberPedidoCommand();
 

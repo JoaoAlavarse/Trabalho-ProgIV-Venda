@@ -96,6 +96,11 @@
                         Command="{Binding Adicionar, UpdateSourceTrigger=PropertyChanged}"
                         Content="_Adicionar" 
                         Foreground="Black"/>
+                <Button Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                        CommandParameter="{Binding}"
+                        Command="{Binding Remover, UpdateSourceTrigger=PropertyChanged}"
+                        Content="_Remover"
+                        Foreground="Black"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"
