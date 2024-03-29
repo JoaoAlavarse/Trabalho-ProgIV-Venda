@@ -22,10 +22,12 @@
         /// </summary>
         public partial class ucListarProdutos : UserControl
         {
+            private static IObserver? _observer;
             internal ucListarProdutos(IObserver observer)
             {
                 InitializeComponent();
                 DataContext = new ListarProdutosViewModel(this,observer);
+                _observer = observer;
             }
 
             internal static void Exibir(IObserver observer)

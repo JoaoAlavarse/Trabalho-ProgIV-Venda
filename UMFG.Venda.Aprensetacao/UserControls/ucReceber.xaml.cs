@@ -30,7 +30,7 @@ namespace UMFG.Venda.Aprensetacao.UserControls
         private ucReceber(IObserver observer, PedidoModel pedido)
         {
             InitializeComponent();
-
+            this.observer = observer;
             DataContext = new ReceberViewModel(this,observer,pedido);
         }
 
@@ -57,9 +57,12 @@ namespace UMFG.Venda.Aprensetacao.UserControls
         {
             string data = this.data.Text;
             string numeroCartao = this.numeroCartao.Text;
+            string cvv = this.cvv.Text;
             DateTimeStyles estiloData = DateTimeStyles.None;
             DateTime dataHoje = DateTime.Today;
-            bool valido = false;
+            bool dataValida = false;
+            bool cartaoValido = false;
+            bool cvvValido = false;
 
             try
             {
@@ -67,43 +70,52 @@ namespace UMFG.Venda.Aprensetacao.UserControls
                 {
                     int comparacao = dataConvertida.CompareTo(dataHoje);
 
-                    if (comparacao < 0)
+                    if (dataConvertida < DateTime.Today)
                     {
-                        valido = false;
+                        dataValida = false;
                         MessageBox.Show("A data já venceu.");
                     }
-                    else if (comparacao > 0)
+                    else if (dataConvertida > DateTime.Today)
                     {
-                        valido = true;
+                        dataValida = true;
                     }
                     else
                     {
-                        valido = false;
+                        dataValida = false;
                         MessageBox.Show("A data é hoje.");
                     }
+                }
+
+                if (int.TryParse(cvv, out int cvvI))
+                {
+                    cvvValido = true;
+                } else
+                {
+                    cvvValido = false;
+                    MessageBox.Show("CVV deve conter apenas numeros");
                 }
 
                 if (long.TryParse(numeroCartao, out long numeroCartaoL))
                 {
                     if (numeroCartao.Length == 16)
                     {
-                        valido = true;
+                        cartaoValido = true;  
                     }
                     else
                     {
-                        valido = false;
+                        cartaoValido = false;
                     }
                 }
                 else
                 {
-                    valido = false;
+                    cartaoValido = false;
                 }
 
-                if (valido)
+                if (cartaoValido && dataValida && cvvValido)
                 {
                     MessageBox.Show("Pagamento realizado", "Sucesso");
-                    NavigationService navigationService = NavigationService.GetNavigationService(this);
-                    navigationService?.Navigate(new ucListarProdutos(observer));
+
+                    ucListarProdutos.Exibir(observer);
                 } 
                 else
                 {
